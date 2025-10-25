@@ -1,6 +1,6 @@
 name: Build
 
-on: [push, pull_request, release, workflow_dispatch]
+on: [push, pull_request]
 
 permissions:
   contents: read
@@ -16,11 +16,28 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y nasm
       - name: Build
         run: make
-      - name: Archive ROM
+      - name: Create alternate layouts
+        run: cp ipl_aswan.bin bw.rom ; cp ipl_sphinx.bin color.rom ; cp ipl_aswan.bin bootrom.ws ; cp ipl_sphinx.bin bootrom.wsc ; cp ipl_sphinx2.bin bootrom_sc.wsc
+      - name: Archive
         uses: actions/upload-artifact@v4
         with:
-          name: metis
+          name: metis-ipl
           path: |
             ipl_aswan.bin
             ipl_sphinx.bin
             ipl_sphinx2.bin
+      - name: Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: metis-ipl (Mesen2)
+          path: |
+            bootrom.ws
+            bootrom.wsc
+            bootrom_sc.wsc
+      - name: Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: metis-ipl (openFPGA)
+          path: |
+            bw.rom
+            color.rom
