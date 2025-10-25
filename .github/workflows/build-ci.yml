@@ -1,0 +1,26 @@
+name: Build
+
+on: [push, pull_request, release, workflow_dispatch]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: Install build tools
+        run: sudo apt-get update && sudo apt-get install -y nasm
+      - name: Build
+        run: make
+      - name: Archive ROM
+        uses: actions/upload-artifact@v4
+        with:
+          name: metis
+          path: |
+            ipl_aswan.bin
+            ipl_sphinx.bin
+            ipl_sphinx2.bin
