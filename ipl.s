@@ -51,11 +51,11 @@ start:
 
 %ifdef FEATURE_VALIDATE_FOOTER
 	; Validate cartridge
-	cmp [0xFFF0], 0xEA
+	cmp byte [0xFFF0], 0xEA
 	jne error_rom_footer
-	test [0xFFF5], 0x0F
+	test byte [0xFFF5], 0x0F
 	jnz error_rom_footer
-	test [0xFFFD], 0xF0
+	test byte [0xFFFD], 0xF0
 	jnz error_rom_footer
 %endif
 
