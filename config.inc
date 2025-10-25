@@ -9,6 +9,9 @@
 ; %define BUG_NO_RESET_BANK
 %endif
 
+; Validate if the cartridge self-test was passed.
+%define FEATURE_VALIDATE_SELF_TEST
+
 ; Validate footer bytes 0x0 and 0x5.
 %define FEATURE_VALIDATE_FOOTER
 

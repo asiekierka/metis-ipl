@@ -16,7 +16,8 @@ Creative Commons Zero
 
 - [x] CPU/IO/RAM reset
 - [x] Cartridge initialization
-- [ ] Pin strapping support
+- [ ] Pin strap 0 support
+- [x] Pin strap 1 support
 - [ ] IEEPROM configuration
 - [ ] Splash screen
 - [ ] Settings menu

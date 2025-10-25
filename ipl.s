@@ -26,10 +26,23 @@ start:
 	out WS_KEY_SCAN_PORT, al
 
 	mov sp, 0x2000
-	push cs
-	pop ds
 
-	; TODO: Check cartridge self-test
+	; TODO: Implement pin strap 0
+
+	; === Self-test validation ===
+
+%ifdef FEATURE_VALIDATE_SELF_TEST
+	; Wait ~20ms
+	; TODO: Can this be lower?
+	mov cx, 4800
+self_test_loop:
+	in al, WS_SYSTEM_CTRL_PORT
+	test al, 0x80
+	jnz self_test_pass
+	loop self_test_loop
+	jmp error_rom_footer
+self_test_pass:
+%endif
 
 	; === Cartridge configuration ===
 
@@ -37,7 +50,6 @@ start:
 	mov ax, 0xFFFF
 	out 0xC2, ax
 %endif
-	push ds
 	push 0x3000
 	pop ds
 
@@ -66,7 +78,15 @@ start:
 	out 0xBE, al
 %endif
 
+	push cs
 	pop ds
+
+	; Check for pin strap 1
+	in al, WS_KEY_SCAN_PORT
+	test al, 0x2
+	jz no_pinstrap_1
+	jmp 0x4000:0x0010
+no_pinstrap_1:
 
 	; === System cleanup and exit ===
 
