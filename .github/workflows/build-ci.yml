@@ -17,7 +17,7 @@ jobs:
       - name: Build
         run: make
       - name: Create alternate layouts
-        run: cp ipl_aswan.bin bw.rom ; cp ipl_sphinx.bin color.rom ; cp ipl_aswan.bin bootrom.ws ; cp ipl_sphinx.bin bootrom.wsc ; cp ipl_sphinx2.bin bootrom_sc.wsc
+        run: cp ipl_aswan.bin bw.rom ; cp ipl_sphinx.bin color.rom ; cp ipl_aswan.bin boot.rom ; cp ipl_sphinx.bin boot1.rom ; cp ipl_aswan.bin bootrom.ws ; cp ipl_sphinx.bin bootrom.wsc ; cp ipl_sphinx2.bin bootrom_sc.wsc
       - name: Archive
         uses: actions/upload-artifact@v4
         with:
@@ -41,3 +41,10 @@ jobs:
           path: |
             bw.rom
             color.rom
+      - name: Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: metis-ipl (MiSTer)
+          path: |
+            boot.rom
+            boot1.rom
